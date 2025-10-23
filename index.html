@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>菜单点餐系统</title>
+    <title>菜单点餐系统2</title>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -153,6 +153,7 @@
             const [showSummary, setShowSummary] = useState(false);
             const [newItem, setNewItem] = useState({ name: '', price: '', category: '热菜' });
             const [batchText, setBatchText] = useState('');
+            const [batchCategory, setBatchCategory] = useState('热菜');
             const [orderHistory, setOrderHistory] = useState(() => loadFromStorage('orderHistory', []));
             const [selectedDate, setSelectedDate] = useState(new Date());
             const [viewMode, setViewMode] = useState('daily'); // daily, monthly, items
@@ -220,7 +221,7 @@
                                 id: ++maxId,
                                 name: name,
                                 price: price,
-                                category: '热菜' // 默认分类，可以手动修改
+                                category: batchCategory
                             });
                         }
                     }
@@ -230,7 +231,7 @@
                     setMenuItems([...menuItems, ...newItems]);
                     setBatchText('');
                     setShowBatchAddForm(false);
-                    alert(`成功添加 ${newItems.length} 个菜品`);
+                    alert(`成功添加 ${newItems.length} 个菜品到【${batchCategory}】分类`);
                 } else {
                     alert('未找到有效的菜品信息，请检查格式（每行格式：菜名 价格）');
                 }
@@ -679,6 +680,23 @@
 可乐 5
 啤酒 8`}
                                             />
+                                        </div>
+                                        
+                                        {/* 新增的分类选择 */}
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">菜品分类</label>
+                                            <select
+                                                value={batchCategory}
+                                                onChange={(e) => setBatchCategory(e.target.value)}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                            >
+                                                <option value="热菜">热菜</option>
+                                                <option value="凉菜">凉菜</option>
+                                                <option value="汤品">汤品</option>
+                                                <option value="主食">主食</option>
+                                                <option value="酒水饮料">酒水饮料</option>
+                                                <option value="其他">其他</option>
+                                            </select>
                                         </div>
                                         
                                         <div className="flex gap-3 mt-6">
